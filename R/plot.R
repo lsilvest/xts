@@ -738,19 +738,29 @@ addSeries <- function(x, main="", on=NA, type="l", col=NULL, lty=1, lwd=1, pch=0
 # Add time series of lines to an existing xts plot
 # author: Ross Bennett
 lines.xts <- function(x, ..., main="", on=0, col=NULL, type="l", lty=1, lwd=1, pch=0){
-  if(!is.na(on[1]))
-    if(on[1] == 0) on[1] <- current_panel()
+  # For backward compatibility, call previous lines.xts if .xts_chob doesn't exist
+  if(!exists(".xts_chob",.plotxtsEnv)) {
+    lines(.index(x), coredata(x), type=type, ...)
+  } else {
+    if(!is.na(on[1]))
+      if(on[1] == 0) on[1] <- current_panel()
   
-  addSeries(x, ...=..., main=main, on=on, type=type, col=col, lty=lty, lwd=lwd, pch=pch)
+    addSeries(x, ...=..., main=main, on=on, type=type, col=col, lty=lty, lwd=lwd, pch=pch)
+  }
 }
 
 # Add time series of points to an existing xts plot
 # author: Ross Bennett
 points.xts <- function(x, ..., main="", on=0, col=NULL, pch=0){
-  if(!is.na(on[1]))
-    if(on[1] == 0) on[1] <- current_panel()
+  # For backward compatibility, call previous points.xts if .xts_chob doesn't exist
+  if(!exists(".xts_chob",.plotxtsEnv)) {
+    points(.index(x), coredata(x), type=type, ...)
+  } else {
+    if(!is.na(on[1]))
+      if(on[1] == 0) on[1] <- current_panel()
   
-  addSeries(x, ...=..., main=main, on=on, type="p", col=col, pch=pch)
+    addSeries(x, ...=..., main=main, on=on, type="p", col=col, pch=pch)
+  }
 }
 
 # Add vertical lines to an existing xts plot
