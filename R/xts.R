@@ -84,8 +84,11 @@ function(x=NULL,
     tzone <- attr(order.by, "tzone")
   if(inherits(order.by,'dates'))
     index <- as.numeric(as.POSIXct(strptime(as.character(order.by),"(%m/%d/%y %H:%M:%S)"))) #$format
+  else if(inherits(order.by,'nanotime')) {
+    index <- order.by
+  }
   else
-  index <- as.numeric(as.POSIXct(order.by))
+    index <- as.numeric(as.POSIXct(order.by))
   x <- structure(.Data=x,
             index=structure(index,tzone=tzone,tclass=orderBy),
             class=c('xts','zoo'),

@@ -22,14 +22,13 @@
 index.xts <- time.xts <-
 function(x, ...) {
   value <- indexClass(x)
-  if(is.null(value))
+  if(is.null(value) || value[[1]]=='nanotime')
     return(.index(x))
   #  if indexClass is Date, POSIXct time is set to 00:00:00 GMT. Convert here
   #  to avoid ugly and hard to debug TZ conversion.  What will this break? 
   if(value[[1]] == "Date")
     #return( as.Date(.index(x)/86400) )
     return( structure(.index(x) %/% 86400, class="Date")) 
-    
 
   #x.index  <- structure(.index(x), class=c("POSIXct","POSIXt"))
   x.index  <- .POSIXct(.index(x), tz=attr(.index(x), "tzone"))

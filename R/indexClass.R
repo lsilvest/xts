@@ -54,7 +54,7 @@ function(x, value) {
   if(length(value)==0L)
     stop(paste('unsupported',sQuote('indexClass'),'indexing type: POSIXt'))
 
-  if(!value[1] %in% c('dates','chron','POSIXlt','POSIXct','Date','timeDate','yearmon','yearqtr','xtime') )
+  if(!value[1] %in% c('dates','chron','POSIXlt','POSIXct','Date','timeDate','yearmon','yearqtr','xtime','nanotime') )
        stop(paste('unsupported',sQuote('indexClass'),'indexing type:',as.character(value[[1]])))
 
   # Add 'POSIXt' virtual class

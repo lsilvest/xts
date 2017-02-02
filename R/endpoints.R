@@ -42,7 +42,8 @@ function(x,on='months',k=1) {
   # make sure we really need it
   if(on %in% c('years','quarters','months','weeks','days'))
     #posixltindex <- as.POSIXlt(structure( .index(x), class=c("POSIXct","POSIXt")))
-    posixltindex <- as.POSIXlt(.POSIXct(.index(x)),tz=indexTZ(x))
+    ## test performance impact of following change: LLL
+    posixltindex <- as.POSIXlt(as.POSIXct(.index(x)),tz=indexTZ(x))
 
   switch(on,
     "years" = {
